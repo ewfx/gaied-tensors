@@ -1,4 +1,4 @@
-# 🚀 Project Name
+# 🚀 GenAI Orchestrator for Email and Document triage/routing
 
 ## 📌 Table of Contents
 - [Introduction](#introduction)
@@ -14,7 +14,11 @@
 ---
 
 ## 🎯 Introduction
-A brief overview of your project and its purpose. Mention which problem statement are your attempting to solve. Keep it concise and engaging.
+
+1.	Use requirement.txt to install all necessary packages.
+2.	Signup into together ai and generate a token (https://api.together.xyz/settings/api-keys)
+3.	Save the token in system environment variable (TOGETHER_API_KEY) and save it.
+4.	Run Python Email_Orchestrator_TogetherAI.py
 
 ## 🎥 Demo
 🔗 [Live Demo](#) (if applicable)  
@@ -50,10 +54,10 @@ Describe the major technical or non-technical challenges your team encountered.
    ```
 
 ## 🏗️ Tech Stack
-- 🔹 Frontend: React / Vue / Angular
-- 🔹 Backend: Node.js / FastAPI / Django
-- 🔹 Database: PostgreSQL / Firebase
-- 🔹 Other: OpenAI API / Twilio / Stripe
+- 🔹 Language: Python
+- 🔹 Backend:  FlaskAPI 
+- 🔹 API Testing: Postman 
+- 🔹 Other: Togetherai API /LLama 
 
 ## 👥 Team
 - **Your Name** - [GitHub](#) | [LinkedIn](#)
