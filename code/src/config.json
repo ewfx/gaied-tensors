@@ -1,0 +1,18 @@
+{
+  "request_types": {
+    "Adjustment": ["Reallocation Fees", "Amendment Fees", "Reallocation Principal"],
+    "Money Movement-Inbound": ["Principal", "Interest", "Principal + Interest", "Principal+Interest+Fee"],
+    "Money Movement-Outbound": ["Timebound", "Foreign Currency"],
+    "AU Transfer": ["Cashless Roll Decrease Increase"],
+    "Closing Notice": ["Ongoing Fee", "Letter of Credit Fee"],
+    "Commitment Change": ["Increase", "Decrease"],
+    "Fee Payment": ["Principal", "Interest", "Principal + Interest", "Principal+Interest+Fee"]
+  },
+  "fields_to_extract": {
+    "deal_name": "Deal Name",
+    "amount": "Amount",
+    "expiration_date": "Expiration Date",
+    "other_field1": "Other Field 1",
+    "other_field2": "Other Field 2"
+  }
+}

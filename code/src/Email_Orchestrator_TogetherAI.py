@@ -17,10 +17,10 @@ import uuid
 app = Flask(__name__)
 
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "pdf", "txt", "docx", "eml", "msg"}
-source_directory = "C:/Users/subba/Downloads/Hackathon Data/test"
+source_directory = "./temp/"
 
 # Load configuration
-config_path = 'C:/Users/subba/Hackathon2025/gaied-tensors/code/src/config.json'
+config_path = './gaied-tensors/code/src/config.json'
 if os.path.getsize(config_path) > 0:
     with open(config_path, 'r') as f:
         config = json.load(f)
@@ -28,7 +28,6 @@ else:
     raise ValueError("The configuration file is empty or not found.")
 
 # Initialize the Together client
-together_api_key  = "ef2cd58c18c3703cc76fcbe6f7d8a27139ecc1fe9c4f935ef7be03d4de870865" # Replace 'your_api_key_here' with your actual API key
 client = Together()
 
 # Function to read and parse emails
@@ -172,7 +171,7 @@ def process_files(file_path, config):
     if file_path.endswith(".eml"):
         email_content = read_eml(file_path)
         email_body = email_content.get_body(preferencelist=('plain', 'html')).get_content()
-        new_guid = uuid.uuid4().hex
+        new_guid = source_directory+uuid.uuid4().hex
         extract_attachments(file_path, new_guid)
         attachments_content = ""
         folder_path = new_guid
@@ -197,10 +196,10 @@ def process_files(file_path, config):
     if file_path.endswith(".msg"):
         email_content = read_msg(file_path)
         email_body = email_content.body
-        new_guid = uuid.uuid4().hex
+        new_guid = source_directory+uuid.uuid4().hex
         for attachment in email_content.attachments:
             os.makedirs(new_guid, exist_ok=True)
-            attachment.save(customPath="./"+new_guid)  # Save attachments to 'attachments/' folder
+            attachment.save(customPath=new_guid)  # Save attachments to 'attachments/' folder
             print(f"Attachment saved: {attachment.longFilename}")
         attachments_content = ""
         folder_path = new_guid
@@ -231,93 +230,6 @@ def process_files(file_path, config):
             "filename": filename,
             "result": result
         }
-    # elif filename.endswith(".msg"):
-    #     msg_content = read_msg(file_path)
-    #     email_body = msg_content.body
-    #     attachments_content = ""
-    #     for attachment in msg_content.attachments:
-    #         if attachment.longFilename.endswith(".pdf"):
-    #             attachments_content += read_pdf(attachment.data)
-    #         elif attachment.longFilename.endswith(".docx"):
-    #             attachments_content += read_doc(attachment.data)
-    #         elif attachment.longFilename.endswith(".txt"):
-    #             attachments_content += read_txt(attachment.data)
-    #         elif attachment.longFilename.lower().endswith(('.png', '.jpg', '.jpeg', '.tiff', '.bmp', '.gif')):
-    #             attachments_content += read_image(attachment.data)
-    #         # Add more conditions for other attachment types if needed
-    #     full_content = email_body + "\n" + attachments_content
-    #     result = classify_and_extract(full_content, config)
-    #     processed_files.append({
-    #         "filename": filename,
-    #         "result": result
-    #     })
-    #     elif filename.endswith(".pdf"):
-    #         pdf_content = read_pdf(file_path)
-    #         result = classify_and_extract(pdf_content, config)
-    #         processed_files.append({
-    #             "filename": filename,
-    #             "result": result
-    #         })
-    #     elif filename.endswith(".docx"):
-    #         doc_content = read_doc(file_path)
-    #         result = classify_and_extract(doc_content, config)
-    #         processed_files.append({
-    #             "filename": filename,
-    #             "result": result
-    #         })
-    #     elif filename.lower().endswith(('.png', '.jpg', '.jpeg', '.tiff', '.bmp', '.gif')):
-    #         image_content = read_image(file_path)
-    #         result = classify_and_extract(image_content, config)
-    #         processed_files.append({
-    #             "filename": filename,
-    #             "result": result
-    #         })
-    #     elif filename.endswith(".txt"):
-    #         txt_content = read_txt(file_path)
-    #         result = classify_and_extract(txt_content, config)
-    #         processed_files.append({
-    #             "filename": filename,
-    #             "result": result
-    #         })
-    # duplicates = detect_duplicates(processed_files)
-    # return processed_files, duplicates
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-# Allowed file extensions (optional)
-
-
-    
-     
-    # output = []
-    # for file in processed_files:
-    #     output.append({
-    #         "filename": file["filename"],
-    #         "request_type": file["result"].get("request_type", ""),
-    #         "sub_request_type": file["result"].get("sub_request_type", ""),
-    #         "confidence_score": file["result"].get("confidence_score", ""),
-    #         "reasoning": file["result"].get("reasoning", ""),
-    #         "extracted_information": file["result"].get("extracted_information", {})
-    #     })
-    
-    # with open('output.json', 'w') as f:
-    #     json.dump(output, f, indent=4)
-    
-    # print("Processed Files:", processed_files)
-    # print("Duplicate Files:", duplicate_files)
-
 def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -337,7 +249,7 @@ def upload_file():
         return jsonify({"error": "No selected file"}), 400
 
     if allowed_file(file.filename):
-        file_path = os.path.join("./", file.filename)
+        file_path = os.path.join(source_directory, file.filename)
         file.save(file_path)
         output= process_files(file_path, config)
         return jsonify(output), 200

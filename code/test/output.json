@@ -1,0 +1,16 @@
+[
+    {
+        "filename": "Final notice.eml",
+        "request_type": "Closing Notice",
+        "sub_request_type": "Ongoing Fee",
+        "confidence_score": 0.8,
+        "reasoning": "The email is a final reminder for an overdue payment, which implies a closing notice for an ongoing fee. The language used is also consistent with a closing notice, such as the mention of 'Immediate Payment Required' and 'additional penalties'.",
+        "extracted_information": {
+            "Deal Name": "Invoice #112233",
+            "Amount": 3750,
+            "Expiration Date": "April 5, 2025",
+            "Other Field 1": "None",
+            "Other Field 2": "None"
+        }
+    }
+]
